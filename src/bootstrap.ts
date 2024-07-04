@@ -70,42 +70,44 @@ function setGlobalMethods() {
 
 // customize localStorage and sessionStorage methods to encrypt data
 function customizeLocalAndSessionStorage(): string {
-  const encrypt = (data: string): string => {
-    data = `${environment.cryptoKey}-` + data
-    return CryptoJS.AES.encrypt(data, environment.cryptoKey).toString();
-  }
+  if (environment.production) {
+    const encrypt = (data: string): string => {
+      data = `${environment.cryptoKey}-` + data
+      return CryptoJS.AES.encrypt(data, environment.cryptoKey).toString();
+    }
 
-  const decrypt = (data: string): string => {
-    const bytes = CryptoJS.AES.decrypt(data, environment.cryptoKey);
-    return bytes.toString(CryptoJS.enc.Utf8).replace(`${environment.cryptoKey}-`, '');
-  }
+    const decrypt = (data: string): string => {
+      const bytes = CryptoJS.AES.decrypt(data, environment.cryptoKey);
+      return bytes.toString(CryptoJS.enc.Utf8).replace(`${environment.cryptoKey}-`, '');
+    }
 
-  // OVERRIDE LOCAL STORAGE METHODS
-  const lStorage = window.localStorage;
-  const oldSetItem = lStorage.setItem;
-  const oldGetItem = lStorage.getItem;
+    // OVERRIDE LOCAL STORAGE METHODS
+    const lStorage = window.localStorage;
+    const oldSetItem = lStorage.setItem;
+    const oldGetItem = lStorage.getItem;
 
-  lStorage.setItem = (key: string, value: string): void => {
-    oldSetItem.call(lStorage, key, encrypt(value));
-  }
+    lStorage.setItem = (key: string, value: string): void => {
+      oldSetItem.call(lStorage, key, encrypt(value));
+    }
 
-  lStorage.getItem = (key: string): string | null => {
-    let value = oldGetItem.call(lStorage, key);
-    return value ? decrypt(value) : value;
-  }
+    lStorage.getItem = (key: string): string | null => {
+      let value = oldGetItem.call(lStorage, key);
+      return value ? decrypt(value) : value;
+    }
 
-  // OVERRIDE SESSION STORAGE METHODS
-  const sStorage = window.sessionStorage;
-  const oldSetItemS = sStorage.setItem;
-  const oldGetItemS = sStorage.getItem;
+    // OVERRIDE SESSION STORAGE METHODS
+    const sStorage = window.sessionStorage;
+    const oldSetItemS = sStorage.setItem;
+    const oldGetItemS = sStorage.getItem;
 
-  sStorage.setItem = (key: string, value: string): void => {
-    oldSetItemS.call(sStorage, key, encrypt(value));
-  }
+    sStorage.setItem = (key: string, value: string): void => {
+      oldSetItemS.call(sStorage, key, encrypt(value));
+    }
 
-  sStorage.getItem = (key: string): string | null => {
-    let value = oldGetItemS.call(sStorage, key);
-    return value ? decrypt(value) : value;
+    sStorage.getItem = (key: string): string | null => {
+      let value = oldGetItemS.call(sStorage, key);
+      return value ? decrypt(value) : value;
+    }
   }
 
   return 'localStorage and sessionStorage methods are customized';
