@@ -3,7 +3,8 @@ import {appConfig} from './app/app.config';
 import {AppComponent} from './app/app.component';
 import bootstrap from "./bootstrap";
 
+bootstrap();
+
 bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
 
-bootstrap();
