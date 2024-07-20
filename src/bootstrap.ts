@@ -1,6 +1,7 @@
 import {environment} from "./environments/environment";
-import {enableProdMode} from "@angular/core";
+import {enableProdMode, inject} from "@angular/core";
 import CryptoJS from 'crypto-js';
+import {Router} from "@angular/router";
 
 export default function bootstrap() {
   toggleLogs();
@@ -71,14 +72,30 @@ function setGlobalMethods() {
 // customize localStorage and sessionStorage methods to encrypt data
 function customizeLocalAndSessionStorage(): string {
   if (environment.production) {
-    const encrypt = (data: string): string => {
-      data = `${environment.cryptoKey}-` + data
-      return CryptoJS.AES.encrypt(data, environment.cryptoKey).toString();
+    const encrypt = (data: string, onError?: ((e: any) => void)): string => {
+      try {
+        data = `${environment.cryptoKey}-` + data
+        return CryptoJS.AES.encrypt(data, environment.cryptoKey).toString();
+      } catch (e) {
+        onError && onError(e);
+        return '';
+      }
     }
 
-    const decrypt = (data: string): string => {
-      const bytes = CryptoJS.AES.decrypt(data, environment.cryptoKey);
-      return bytes.toString(CryptoJS.enc.Utf8).replace(`${environment.cryptoKey}-`, '');
+    const decrypt = (data: string, onError?: ((e?: any) => void)): string => {
+      try {
+        const bytes = CryptoJS.AES.decrypt(data, environment.cryptoKey);
+        return bytes.toString(CryptoJS.enc.Utf8).replace(`${environment.cryptoKey}-`, '');
+      } catch (e) {
+        onError && onError(e);
+        return '';
+      }
+    }
+
+    const logout = () => {
+      localStorage.clear();
+      sessionStorage.clear();
+      inject(Router).navigate(['/login']);
     }
 
     // OVERRIDE LOCAL STORAGE METHODS
@@ -87,12 +104,12 @@ function customizeLocalAndSessionStorage(): string {
     const oldGetItem = lStorage.getItem;
 
     lStorage.setItem = (key: string, value: string): void => {
-      oldSetItem.call(lStorage, key, encrypt(value));
+      oldSetItem.call(lStorage, key, encrypt(value, logout));
     }
 
     lStorage.getItem = (key: string): string | null => {
       let value = oldGetItem.call(lStorage, key);
-      return value ? decrypt(value) : value;
+      return value ? decrypt(value, logout) : value;
     }
 
     // OVERRIDE SESSION STORAGE METHODS
@@ -101,14 +118,15 @@ function customizeLocalAndSessionStorage(): string {
     const oldGetItemS = sStorage.getItem;
 
     sStorage.setItem = (key: string, value: string): void => {
-      oldSetItemS.call(sStorage, key, encrypt(value));
+      oldSetItemS.call(sStorage, key, encrypt(value, logout));
     }
 
     sStorage.getItem = (key: string): string | null => {
       let value = oldGetItemS.call(sStorage, key);
-      return value ? decrypt(value) : value;
+      return value ? decrypt(value, logout) : value;
     }
   }
 
   return 'localStorage and sessionStorage methods are customized';
 }
+

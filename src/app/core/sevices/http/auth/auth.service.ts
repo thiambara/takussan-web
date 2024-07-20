@@ -16,15 +16,19 @@ export class AuthService extends BaseHttpService<User> {
 
   protected override suffix: string = 'auth';
 
-  get isAuthenticated(): boolean {
-    return AuthService.authToken !== null;
-  }
-
   static get authToken(): AuthToken | undefined {
     return StorageService.getItemFromLocalStorage('authToken') || StorageService.getItemFromSessionStorage('authToken');
   }
 
-  static seAuthToken(token: AuthToken, rememberMe: boolean = false) {
+  static get isAuthenticated(): boolean {
+    return AuthService.authToken !== null;
+  }
+
+  get authenticatedUser(): User | undefined {
+    return StorageService.getItemFromLocalStorage('authenticatedUser');
+  }
+
+  seAuthToken(token: AuthToken, rememberMe: boolean = false) {
     if (rememberMe) {
       StorageService.setItemInLocalStorage('authToken', token);
     } else {
@@ -32,23 +36,17 @@ export class AuthService extends BaseHttpService<User> {
     }
   }
 
-  get authenticatedUser(): User | undefined {
-    return StorageService.getItemFromLocalStorage('authenticatedUser');
-  }
-
-  seTAuthenticatedUser(user: User, rememberMe: boolean = false) {
+  setAuthenticatedUser(user: User, rememberMe: boolean = false) {
     if (rememberMe) {
       StorageService.setItemInLocalStorage('authenticatedUser', user);
     } else {
       StorageService.setItemInSessionStorage('authenticatedUser', user);
     }
-  }
-
-  populateAuthenticatedUser() {
     window.loggedUser = this.authenticatedUser;
+
   }
 
-  public requestTokenFromRestoApi(credentials: { username: string, password: string }): Observable<AuthToken> {
+  public login(credentials: { username: string, password: string }): Observable<AuthToken> {
     const c = {...credentials};
     return this.http.post<AuthToken>(`${this.endpointUrl}/login`, c, this.httpOptions).pipe();
   }

@@ -1,10 +1,12 @@
 import {Routes} from '@angular/router';
+import {dashboardGuard} from "./core/guards/dashboard.guard";
 
 export const routes: Routes = [
   {
     path: '',
     redirectTo: 'dashboard',
-    pathMatch: 'full'
+    pathMatch: 'full',
+    canActivate: [dashboardGuard]
   },
   {
     'path': 'dashboard',
