@@ -5,9 +5,6 @@ import {AuthService} from "../sevices/http/auth/auth.service";
 export const dashboardGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
   const router = inject(Router)
 
-  if (!AuthService.isAuthenticated) {
-    return true;
-  }
   if (AuthService.isAuthenticated && next.routeConfig?.path === 'login') {
     router.navigate(['/']).then();
     return false;
