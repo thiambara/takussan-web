@@ -6,10 +6,10 @@ export const routes: Routes = [
     path: '',
     redirectTo: 'dashboard',
     pathMatch: 'full',
-    canActivate: [dashboardGuard]
   },
   {
     'path': 'dashboard',
+    canActivate: [dashboardGuard],
     loadComponent: () => import('./core/layouts/dashboard/dashboard.layout.component').then(m => m.DashboardLayoutComponent),
     children: [
       {
@@ -22,5 +22,9 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/dashboard/home/home.component').then(m => m.HomeComponent)
       },
     ]
+  },
+  {
+    'path': 'login',
+    loadComponent: () => import('./pages/auth/login/login.component').then(m => m.LoginComponent)
   }
 ];
