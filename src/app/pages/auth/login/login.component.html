@@ -38,8 +38,9 @@
 
                 <label for="rememberMe">Remember me</label>
               </div>
-              <a class="font-medium no-underline ml-2 text-right cursor-pointer" style="color: var(--primary-color)">Forgot
-                password?</a>
+              <a [routerLink]="'/sing-up'" class="font-medium no-underline ml-2 text-right cursor-pointer"
+                 style="color: var(--primary-color)">
+                Sign up</a>
             </div>
             <button (click)="login()" class="w-full p-3 text-xl" label="Sign In" name="login" pButton pRipple></button>
           </div>

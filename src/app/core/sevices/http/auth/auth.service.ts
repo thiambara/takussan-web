@@ -59,10 +59,6 @@ export class AuthService extends BaseHttpService<User> {
     return this.http.post(`${this.endpointUrl}/logout`, {}, this.httpOptions).pipe();
   }
 
-  public register(data: any): any {
-    return this.http.post(`${this.endpointUrl}/register`, data, this.httpOptions).pipe();
-  }
-
   public changePassword(data: any): any {
     return this.http.post(`${this.endpointUrl}/change-password`, data, this.httpOptions).pipe();
   }

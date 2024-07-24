@@ -8,12 +8,13 @@ import {FormsModule} from "@angular/forms";
 import {PasswordModule} from "primeng/password";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {Ripple} from "primeng/ripple";
-import {AuthService} from "../../../core/sevices/http/auth/auth.service";
+import {User} from "../../../core/models/http/user.model";
+import {UserService} from "../../../core/sevices/http/user.service";
 
 @Component({
 
-  selector: 'app-login',
-  templateUrl: './login.component.html',
+  selector: 'app-sign-up',
+  templateUrl: './sign-up.component.html',
   imports: [
     CommonModule,
     ButtonModule,
@@ -27,17 +28,21 @@ import {AuthService} from "../../../core/sevices/http/auth/auth.service";
   ],
   standalone: true
 })
-export class LoginComponent implements OnInit {
-  redirectUrl: string = "/";
+export class SignUpComponent implements OnInit {
+  redirectUrl: string = "/login";
 
-  // credentials
-  username!: string;
-  password!: string;
-  rememberMe: boolean = false;
+  user: User & { passwordConfirmation: string } = {
+    first_name: '',
+    last_name: '',
+    username: '',
+    email: '',
+    password: '',
+    passwordConfirmation: ''
+  };
 
   constructor(
     public layoutService: DashboardLayoutService,
-    private authService: AuthService,
+    private userService: UserService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -48,36 +53,33 @@ export class LoginComponent implements OnInit {
   }
 
   validatedData() {
-    if (this.username && this.password) {
-      return {
-        username: this.username,
-        password: this.password
-      }
+    if (
+      this.user.username
+      && this.user.password
+      && this.user.passwordConfirmation === this.user.password
+    ) {
+      return this.user
     }
     return false;
   }
 
-  login() {
-    const credentials = this.validatedData();
-    if (credentials) {
-      this.authService.login(credentials).subscribe(token => {
-        this.authService.seAuthToken(token);
-        this.authService.fetchAuthenticatedUser().subscribe(user => {
-          this.authService.setAuthenticatedUser(user, this.rememberMe);
-          this.onLoginSuccess();
-        });
+  signUp() {
+    const data = this.validatedData();
+    if (data) {
+      this.userService.create({...data, type: 'entrepreneur'}).subscribe(() => {
+        this.onRegistrationSuccess();
       });
     }
   }
 
-  onLoginSuccess() {
-    this.router.navigate([this.redirectUrl ?? '/']).then();
+  onRegistrationSuccess() {
+    this.router.navigate([this.redirectUrl]).then();
   }
 
   @HostListener("window:keyup", ["$event"])
   keyEvent(event: KeyboardEvent) {
     if (event.key === "Enter") {
-      this.login();
+      this.signUp();
     }
   }
 }
