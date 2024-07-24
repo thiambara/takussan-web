@@ -19,7 +19,7 @@ import {DashboardConfigComponent} from "./config/dashboard.config.component";
     DashboardFooterComponent,
     DashboardConfigComponent
   ],
-  standalone: true
+  standalone: true,
 })
 export class DashboardLayoutComponent implements OnDestroy {
 

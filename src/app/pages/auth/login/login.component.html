@@ -12,7 +12,7 @@
       style="border-radius:56px; padding:0.3rem; background: linear-gradient(180deg, var(--primary-color) 10%, rgba(33, 150, 243, 0) 30%);">
       <div class="w-full surface-card py-8 px-5 sm:px-8" style="border-radius:53px">
         <div class="text-center mb-5">
-          <span class="text-600 font-medium">Sign in to continue</span>
+          <span class="text-600 text-3xl font-medium">Sign in to continue</span>
         </div>
 
         <form>
@@ -38,11 +38,17 @@
 
                 <label for="rememberMe">Remember me</label>
               </div>
-              <a [routerLink]="'/sing-up'" class="font-medium no-underline ml-2 text-right cursor-pointer"
+              <a [routerLink]="'/forget-password'" class="font-medium no-underline ml-2 text-right cursor-pointer"
                  style="color: var(--primary-color)">
-                Sign up</a>
+                Forget password</a>
             </div>
             <button (click)="login()" class="w-full p-3 text-xl" label="Sign In" name="login" pButton pRipple></button>
+            <div class="flex align-items-center justify-content-center mt-4 gap-5">
+              <a [routerLink]="'/sign-up'" class="font-medium no-underline ml-2 text-right cursor-pointer"
+                 style="color: var(--primary-color)">
+                Don't have an account (Sign Up)
+              </a>
+            </div>
           </div>
         </form>
 
