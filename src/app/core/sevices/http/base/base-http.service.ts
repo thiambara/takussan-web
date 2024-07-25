@@ -3,6 +3,8 @@ import {environment} from "../../../../../environments/environment";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {BaseModelInterface} from "../../../models/http/base/base.model";
+import {PaginationResult} from "../../../models/http/base/pagination-result.model";
+import {BaseHttpIndexQueryParams} from "../../../models/http/base/base-http-index-query-param.model";
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +34,8 @@ export class BaseHttpService<T extends BaseModelInterface> {
     this.apiUrl = url;
   }
 
-  public index(params: any = {}): Observable<any> {
-    return this.http.get(`${this.endpointUrl}?${objectToQueryString(params)}`, this.httpOptions).pipe();
+  public index(params: BaseHttpIndexQueryParams<T> = {}): Observable<T[] | PaginationResult<T>> {
+    return this.http.get<T[] | PaginationResult<T>>(`${this.endpointUrl}?${objectToQueryString(params)}`, this.httpOptions).pipe();
   }
 
   get(id: number, params: any = {}): Observable<T> {

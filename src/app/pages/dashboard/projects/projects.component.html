@@ -1,0 +1,150 @@
+<div class="grid">
+  <div class="col-12">
+    <div class="card px-6 py-6">
+
+      <!--PROJECTS TABLE TOOLBAR-->
+      <p-toolbar styleClass="mb-4">
+        <ng-template pTemplate="left">
+          <div class="my-2">
+            <button (click)="openNew()" class="p-button-success mr-2" icon="pi pi-plus" label="New" pButton
+                    pRipple></button>
+          </div>
+        </ng-template>
+
+        <ng-template pTemplate="right">
+          <p-fileUpload [maxFileSize]="1000000" accept="csv/*" chooseLabel="Import" class="mr-2 inline-block"
+                        mode="basic">Import
+          </p-fileUpload>
+        </ng-template>
+      </p-toolbar>
+
+      <!--PROJECTS TABLE-->
+      <p-table [(selection)]="selectedProjects"
+               [expandedRowKeys]="expandedRows"
+               [paginator]="true"
+               [rowHover]="true"
+               [rowsPerPageOptions]="rowsPerPageOptions"
+               [rows]="10"
+               [showCurrentPageReport]="true" [value]="projects"
+               currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" dataKey="id"
+               selectionMode="multiple"
+      >
+
+        <!--PROJECTS TABLE CAPTION-->
+        <ng-template pTemplate="caption">
+          <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+            <h5 class="m-0">Manage Products</h5>
+            <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input (input)="onSearch()" [(ngModel)]="searchQuery" class="w-full sm:w-auto" pInputText
+                                   placeholder="Search..."
+                                   type="text"/>
+                        </span>
+          </div>
+        </ng-template>
+
+        <!--PROJECTS TABLE HEADER-->
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 5rem"></th>
+            <th style="width: 3rem">
+              <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+            <th pSortableColumn="created_at">Created At
+              <p-sortIcon field="created_at"></p-sortIcon>
+            </th>
+            <th pSortableColumn="title">Title
+              <p-sortIcon field="title"></p-sortIcon>
+            </th>
+            <th pSortableColumn="status">Status
+              <p-sortIcon field="status"></p-sortIcon>
+            </th>
+          </tr>
+        </ng-template>
+
+        <!--PROJECTS TABLE BODY-->
+        <ng-template let-expanded="expanded" let-project pTemplate="body">
+          <tr>
+            <td>
+              <p-button [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" [pRowToggler]="project"
+                        [plain]="true" [rounded]="true" [text]="true" pRipple
+                        type="button"/>
+            </td>
+            <td>
+              <p-tableCheckbox [value]="project"></p-tableCheckbox>
+            </td>
+            <td>{{ project.createdAt | date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+            <td>{{ project.title }}</td>
+            <td>
+              <span
+                [class]="'product-badge status-' + (project.status?.toLowerCase() ?? '')">{{ project.status }}</span>
+            </td>
+          </tr>
+        </ng-template>
+
+        <!--PROJECTS TABLE ROW EXPANSION-->
+        <ng-template let-project pTemplate="rowexpansion">
+          <tr>
+            <td colspan="5">
+              <div class="p-3">
+
+                <!--LANDS TABLE-->
+                <p-table [value]="project.lands ?? []" dataKey="id">
+
+                  <!--LANDS TABLE HEADER-->
+                  <ng-template pTemplate="header">
+                    <tr>
+                      <th pSortableColumn="title">Title
+                        <p-sortIcon field="title"/>
+                      </th>
+                      <th pSortableColumn="status">Status
+                        <p-sortIcon field="status"/>
+                      </th>
+                      <th pSortableColumn="price">Price
+                        <p-sortIcon field="price"/>
+                      </th>
+                      <th pSortableColumn="area">Area
+                        <p-sortIcon field="area"/>
+                      </th>
+                      <th style="width: 4rem"></th>
+                    </tr>
+                  </ng-template>
+
+                  <!--LANDS TABLE BODY-->
+                  <ng-template let-land pTemplate="body">
+                    <tr>
+                      <td>{{ land.title }}</td>
+                      <td>{{ land.status }}</td>
+                      <td>{{ land.price }}</td>
+                      <td>{{ land.area }}</td>
+                      <td>
+                        <p-button icon="pi pi-search" type="button"/>
+                      </td>
+                    </tr>
+                  </ng-template>
+
+                  <!--LANDS TABLE EMPTY MESSAGE-->
+                  <ng-template pTemplate="emptymessage">
+                    <tr>
+                      <td colspan="6">There are no land for this project yet.</td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+
+              </div>
+
+            </td>
+          </tr>
+        </ng-template>
+
+        <!--PROJECTS TABLE EMPTY MESSAGE-->
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="6">There are no project yet.</td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+
+  </div>
+</div>
