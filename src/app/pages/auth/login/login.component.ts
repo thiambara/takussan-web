@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
     const credentials = this.validatedData();
     if (credentials) {
       this.authService.login(credentials).subscribe(token => {
-        this.authService.seAuthToken(token);
+        this.authService.seAuthToken(token, this.rememberMe);
         this.authService.fetchAuthenticatedUser().subscribe(user => {
           this.authService.setAuthenticatedUser(user, this.rememberMe);
           this.onLoginSuccess();

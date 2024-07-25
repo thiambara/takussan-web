@@ -7,7 +7,7 @@ import {BaseModelInterface} from "../../../models/http/base/base.model";
 @Injectable({
   providedIn: 'root'
 })
-export class BaseHttpService <T extends BaseModelInterface>{
+export class BaseHttpService<T extends BaseModelInterface> {
 
   protected apiUrl: string = `${environment.apiUrl}/api`;
   protected suffix: string = '';
@@ -17,11 +17,11 @@ export class BaseHttpService <T extends BaseModelInterface>{
     })
   };
 
-  protected get endpointUrl(): string {
-    return `${this.apiUrl}/${this.suffix}`;
+  constructor(protected http: HttpClient) {
   }
 
-  constructor(protected http: HttpClient) {
+  protected get endpointUrl(): string {
+    return `${this.apiUrl}/${this.suffix}`;
   }
 
   setSuffix(suffix: string) {
