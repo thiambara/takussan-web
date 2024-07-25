@@ -9,8 +9,12 @@ export const routes: Routes = [
     children: [
       {
         'path': '',
-        redirectTo: 'home',
+        redirectTo: 'projects',
         pathMatch: 'full'
+      },
+      {
+        path: 'projects',
+        loadComponent: () => import('../../../pages/dashboard/projects/projects.component').then(m => m.ProjectsComponent),
       },
       {
         'path': 'home',

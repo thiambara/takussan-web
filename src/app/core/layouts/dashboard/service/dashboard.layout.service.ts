@@ -1,5 +1,6 @@
 import {effect, Injectable, signal} from '@angular/core';
 import {Subject} from 'rxjs';
+import {StorageService} from "../../../sevices/storage.service";
 
 export interface DashboardConfig {
   inputStyle: string;
@@ -23,7 +24,7 @@ interface DashboardLayoutState {
   providedIn: 'root',
 })
 export class DashboardLayoutService {
-  _config: DashboardConfig = {
+  _config: DashboardConfig = StorageService.getItemFromLocalStorage('applicationConfig') ?? {
     ripple: false,
     inputStyle: 'outlined',
     menuMode: 'static',
@@ -35,7 +36,7 @@ export class DashboardLayoutService {
   config = signal<DashboardConfig>(this._config);
 
   state: DashboardLayoutState = {
-    staticMenuDesktopInactive: false,
+    staticMenuDesktopInactive: true,
     overlayMenuActive: false,
     profileSidebarVisible: false,
     configSidebarVisible: false,
@@ -51,6 +52,7 @@ export class DashboardLayoutService {
   constructor() {
     effect(() => {
       const config = this.config();
+      StorageService.setItemInLocalStorage('applicationConfig', config)
       if (this.updateStyle(config)) {
         this.changeTheme();
       }
