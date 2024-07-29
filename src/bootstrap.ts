@@ -2,6 +2,7 @@ import {environment} from "./environments/environment";
 import {enableProdMode, inject} from "@angular/core";
 import CryptoJS from 'crypto-js';
 import {Router} from "@angular/router";
+import {AuthService} from "./app/core/sevices/http/auth/auth.service";
 
 export default function bootstrap() {
   toggleLogs();
@@ -66,6 +67,8 @@ function setGlobalMethods() {
   String.prototype.toSnakeCase = function (): string {
     return toSnakeCase(this as string);
   }
+
+  window.loggedUser = AuthService.getAuthenticatedUser();
 }
 
 

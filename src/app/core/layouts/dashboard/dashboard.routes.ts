@@ -14,7 +14,7 @@ export const routes: Routes = [
       },
       {
         path: 'projects',
-        loadComponent: () => import('../../../pages/dashboard/projects/projects.component').then(m => m.ProjectsComponent),
+        loadChildren: () => import('../../../pages/dashboard/projects/projects.routes').then(m => m.routes),
       },
       {
         'path': 'home',

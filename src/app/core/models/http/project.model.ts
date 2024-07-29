@@ -9,5 +9,6 @@ export interface Project extends BaseModelInterface {
   user_id?: number;
   user?: User;
   lands?: Land[];
+  lands_count?: number;
 }
 

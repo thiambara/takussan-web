@@ -28,6 +28,10 @@ export class AuthService extends BaseHttpService<User> {
     return StorageService.getItemFromLocalStorage('authenticatedUser');
   }
 
+  static getAuthenticatedUser() {
+    return StorageService.getItemFromLocalStorage('authenticatedUser') || StorageService.getItemFromSessionStorage('authenticatedUser')
+  }
+
   seAuthToken(token: AuthToken, rememberMe: boolean = false) {
     if (rememberMe) {
       StorageService.setItemInLocalStorage('authToken', token);
@@ -43,7 +47,6 @@ export class AuthService extends BaseHttpService<User> {
       StorageService.setItemInSessionStorage('authenticatedUser', user);
     }
     window.loggedUser = this.authenticatedUser;
-
   }
 
   public login(credentials: { username: string, password: string }): Observable<AuthToken> {

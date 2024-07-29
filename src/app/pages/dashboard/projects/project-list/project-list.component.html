@@ -1,0 +1,100 @@
+<div class="card p-6">
+  <!--PROJECTS TABLE TOOLBAR-->
+  <p-toolbar styleClass="mb-4">
+    <ng-template pTemplate="left">
+      <div class="my-2">
+        <button (click)="openNew()" class="p-button-success mr-2" icon="pi pi-plus" label="New" pButton
+                pRipple></button>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="right">
+      <button (click)="projectsTable.exportCSV()" class="p-button-help" icon="pi pi-upload" label="Export" pButton
+              pRipple></button>
+
+    </ng-template>
+  </p-toolbar>
+
+  <!--PROJECTS TABLE-->
+  <p-table #projectsTable [(selection)]="selectedProjects"
+           [columns]="[]"
+           [paginator]="true"
+           [rowHover]="true"
+           [rowsPerPageOptions]="rowsPerPageOptions"
+           [rows]="10"
+           [showCurrentPageReport]="true" [value]="projects"
+           currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" dataKey="id"
+           selectionMode="multiple"
+  >
+
+    <!--PROJECTS TABLE CAPTION-->
+    <ng-template pTemplate="caption">
+      <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+        <h5 class="m-0">Manage your projects</h5>
+        <span class="block mt-2 md:mt-0 p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input (input)="onSearch()" [(ngModel)]="searchQuery" class="w-full sm:w-auto" pInputText
+                                   placeholder="Search..."
+                                   type="text"/>
+                        </span>
+      </div>
+    </ng-template>
+
+    <!--PROJECTS TABLE HEADER-->
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 3rem">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="created_at">Created At
+          <p-sortIcon field="created_at"></p-sortIcon>
+        </th>
+        <th pSortableColumn="title">Title
+          <p-sortIcon field="title"></p-sortIcon>
+        </th>
+        <th pSortableColumn="lands_count">Number of Lands
+          <p-sortIcon field="lands_count"></p-sortIcon>
+        </th>
+        <th pSortableColumn="status">Status
+          <p-sortIcon field="status"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+
+    <!--PROJECTS TABLE BODY-->
+    <ng-template let-project pTemplate="body">
+      <tr>
+        <td>
+          <p-tableCheckbox [value]="project"></p-tableCheckbox>
+        </td>
+        <td>{{ project.created_at| date: 'dd/MM/yyyy HH:mm:ss' }}</td>
+        <td>{{ project.title }}</td>
+        <td>{{ project.lands_count }}</td>
+        <td>
+              <span
+                [class]="'product-badge status-' + (project.status?.toLowerCase() ?? '')">{{ project.status }}</span>
+        </td>
+        <td>
+          <div class="flex justify-content-end">
+            <button [routerLink]="project.id" class="p-button-text" label="Details" pButton
+                    pRipple></button>
+          </div>
+
+        </td>
+      </tr>
+    </ng-template>
+
+    <!--PROJECTS TABLE EMPTY MESSAGE-->
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="5">
+          <div class="w-full flex justify-content-center align-items-center h-30rem">
+            <span class="text-2xl">There are no project yet.</span>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+

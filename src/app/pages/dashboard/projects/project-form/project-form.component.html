@@ -1,0 +1,28 @@
+<form [formGroup]="projectForm">
+  <div class="p-fluid">
+    <div class="field">
+      <label for="title">Title</label>
+      <input [ngClass]="{'ng-invalid ng-dirty' : title.invalid && (title.dirty || title.touched)}" autofocus
+             formControlName="title"
+             id="title"
+             name="title" pInputText required
+             type="text"/>
+      <small *ngIf="title.invalid && (title.dirty || title.touched)" class="ng-dirty ng-invalid mt-1 p-error">Title is
+        required.</small>
+    </div>
+    <div class="field">
+      <label for="description">Description</label>
+      <textarea cols="20" formControlName="description" id="description" name="description" pInputTextarea
+                rows="3"></textarea>
+    </div>
+  </div>
+</form>
+
+<div class="flex justify-content-between">
+  <button (click)="close()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton pRipple></button>
+  <button (click)="saveProject()" [disabled]="projectForm.invalid" class="p-button-text"
+          icon="pi {{saving ? 'pi-spin pi-spinner': 'pi-check'}}"
+          label="Save"
+          pButton
+          pRipple></button>
+</div>
