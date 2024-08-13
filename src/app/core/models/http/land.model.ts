@@ -5,7 +5,7 @@ import {Booking} from "./booking.model";
 export interface Land extends BaseModelInterface {
   title?: string;
   description?: string;
-  status?: string;
+  status?: 'active' | 'inactive' | 'sold';
   price?: number;
   area?: number;
   project_id?: number;

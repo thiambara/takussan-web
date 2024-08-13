@@ -44,7 +44,10 @@ export class ProjectDetailsComponent implements OnInit {
 
   getProject() {
     this.loading = true;
-    this.projectService.get(this.projectId, {projects: {with: "lands", with_count: "lands"}})
+    this.projectService.get(this.projectId, {
+      projects: {with: ['lands', 'lands.bookings'], with_count: 'lands'},
+      filter_fields: {'lands.bookings.status': '@in pending,approved'}
+    })
       .pipe(finalize(() => this.loading = false))
       .subscribe({
         next: result => {

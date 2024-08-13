@@ -9,7 +9,7 @@ type OrderByType<T> =
 export type BaseHttpIndexQueryParams<T extends BaseModelInterface> = {
   [key in TableName]?: {
     hidden?: (keyof T)[] | keyof T;
-    with?: (keyof T)[] | keyof T;
+    with?: (keyof T | string)[] | keyof T | string;
     with_count?: (keyof T)[] | keyof T;
     appends?: (keyof T)[] | keyof T;
     [key: string]: any;
@@ -22,7 +22,7 @@ export type BaseHttpIndexQueryParams<T extends BaseModelInterface> = {
   columns?: (keyof T | string)[] | keyof T | string;
   order_by?: OrderByType<T>;
   filter_fields?: {
-    [key in keyof T]?: string | number | boolean | null | (string | number | boolean | null)[]
+    [key in keyof T | string]?: string | number | boolean | null | (string | number | boolean | null)[]
   };
   filter_tags?: string[];
   [key: string]: any;
