@@ -6,6 +6,10 @@ import {CommonModule} from "@angular/common";
 import {finalize} from "rxjs";
 import {ButtonDirective} from "primeng/button";
 import {Ripple} from "primeng/ripple";
+import {ProjectFormComponent} from "../project-form/project-form.component";
+import {DialogService} from "primeng/dynamicdialog";
+import {LandFormComponent} from "./land-form/land-form.component";
+import {Land} from "../../../../core/models/http/land.model";
 
 @Component({
   selector: 'app-project-details',
@@ -18,13 +22,14 @@ import {Ripple} from "primeng/ripple";
   standalone: true
 })
 export class ProjectDetailsComponent implements OnInit {
-  project!: Project;
+  project?: Project;
   projectId!: number;
   loading = false;
 
   constructor(
     private projectService: ProjectService,
     private messageService: MessageService,
+    private dialogService: DialogService
   ) {
   }
 
@@ -56,8 +61,40 @@ export class ProjectDetailsComponent implements OnInit {
       });
   }
 
-
   editProject() {
+    if (!this.project) return;
+    this.dialogService.open(ProjectFormComponent, {
+      header: 'Update project',
+      width: '40rem',
+      closable: true,
+      data: {
+        project: this.project
+      }
+    }).onClose.subscribe({
+      next: (value) => {
+        if (value) {
+          this.getProject();
+        }
+      }
+    });
+  }
 
+  showLandForm(land?: Land) {
+    if (!this.project) return;
+    this.dialogService.open(LandFormComponent, {
+      header: land?.id ? 'Update land' : 'Add new land',
+      width: '40rem',
+      closable: true,
+      data: {
+        land: land ?? {},
+        projectId: this.projectId
+      }
+    }).onClose.subscribe({
+      next: (value) => {
+        if (value) {
+          this.getProject();
+        }
+      }
+    });
   }
 }

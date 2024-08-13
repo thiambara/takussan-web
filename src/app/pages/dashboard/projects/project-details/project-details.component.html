@@ -27,10 +27,18 @@
   </div>
 </div>
 
-<div class="pl-1">
-  <h5 class="mt-4">Lands</h5>
-  <div class="grid">
-    <!--Add button-->
-    <div class="col"></div>
+<div class="flex vertical-align-middle mb-3">
+  <h5 class="text-3xl m-0 mr-2">Lands</h5>
+  <div (click)="showLandForm()"
+       class="border-dashed border-round flex justify-content-center px-1 pb-1 text-3xl cursor-pointer align-items-center h-2rem">
+    <span>+</span>
   </div>
 </div>
+
+@if (project?.lands?.length) {
+
+} @else {
+
+}
+
+
