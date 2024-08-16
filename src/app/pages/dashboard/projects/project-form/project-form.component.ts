@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {ProjectService} from "../../../../core/sevices/http/project.service";
 import {ToolbarModule} from "primeng/toolbar";
@@ -7,7 +7,7 @@ import {Project} from "../../../../core/models/http/project.model";
 import {InputTextModule} from "primeng/inputtext";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {CommonModule} from "@angular/common";
-import {DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ButtonDirective} from "primeng/button";
 import {Ripple} from "primeng/ripple";
 import {finalize} from "rxjs";
@@ -28,8 +28,7 @@ import {finalize} from "rxjs";
   standalone: true
 })
 export class ProjectFormComponent implements OnInit {
-
-  @Input() project: Project = {};
+  project: Project = {};
   projectForm!: FormGroup;
   saving = false;
 
@@ -38,6 +37,7 @@ export class ProjectFormComponent implements OnInit {
     private messageService: MessageService,
     private fb: FormBuilder,
     private ref: DynamicDialogRef,
+    private config: DynamicDialogConfig
   ) {
   }
 
@@ -47,6 +47,7 @@ export class ProjectFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.project = this.config.data.project;
     this.project = deepCopy(this.project);
     this.initializeFormBuilder();
   }

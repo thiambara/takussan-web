@@ -5,7 +5,7 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {InputTextModule} from "primeng/inputtext";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {CommonModule} from "@angular/common";
-import {DynamicDialogRef} from "primeng/dynamicdialog";
+import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ButtonDirective} from "primeng/button";
 import {Ripple} from "primeng/ripple";
 import {finalize} from "rxjs";
@@ -28,9 +28,8 @@ import {Land} from "../../../../../core/models/http/land.model";
   standalone: true
 })
 export class LandFormComponent implements OnInit {
-
-  @Input() land: Land = {};
-  @Input() projectId!: number;
+  @Input('land') land: Land = {};
+  @Input('projectId') projectId!: number;
   landForm!: FormGroup;
   saving = false;
 
@@ -39,6 +38,7 @@ export class LandFormComponent implements OnInit {
     private messageService: MessageService,
     private fb: FormBuilder,
     private ref: DynamicDialogRef,
+    public config: DynamicDialogConfig
   ) {
   }
 
@@ -48,7 +48,8 @@ export class LandFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.land = deepCopy(this.land);
+    this.land = deepCopy(this.config.data.land);
+    this.projectId = this.config.data.projectId;
     this.initializeFormBuilder();
   }
 
@@ -61,12 +62,15 @@ export class LandFormComponent implements OnInit {
   }
 
   save() {
+    console.log(this.projectId)
     if (this.saving) return;
     this.saving = true;
     const data = {
       ...this.landForm.value,
       status: 'active',
-      user_id: loggedUser.id,
+      price: 100,
+      area: 100,
+      description: 'Description 1',
       project_id: this.projectId
     };
     (

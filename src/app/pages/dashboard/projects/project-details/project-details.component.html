@@ -37,7 +37,36 @@
 
 @if (project?.lands?.length) {
 
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div *ngFor="let land of project?.lands" class="card p-3">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="col">
+          <h6 class="text-gray-500">Title</h6>
+          <p class="text-900 text-xl">{{ land?.title }}</p>
+        </div>
+        <div class="col">
+          <h6 class="text-gray-500">Status</h6>
+          <p class="text-900 text-xl">{{ land?.status }}</p>
+        </div>
+        <div class="col">
+          <h6 class="text-gray-500">Created At</h6>
+          <p class="text-900 text-xl">{{ land?.created_at | date: 'medium' }}</p>
+        </div>
+        <div class="col">
+          <h6 class="text-gray-500">Description</h6>
+          <p class="text-900 text-sm">{{ land?.description ?? 'No description' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
 } @else {
+
+  <div class="h-10rem">
+    <div class="flex justify-content-center align-items-center h-full">
+      <h1>No lands found</h1>
+    </div>
+  </div>
 
 }
 
