@@ -68,7 +68,7 @@ function setGlobalMethods() {
     return toSnakeCase(this as string);
   }
 
-  window.loggedUser = AuthService.getAuthenticatedUser();
+  window.authUser = AuthService.getAuthenticatedUser();
 }
 
 

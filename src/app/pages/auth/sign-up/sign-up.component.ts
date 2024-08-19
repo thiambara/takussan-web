@@ -66,7 +66,7 @@ export class SignUpComponent implements OnInit {
   signUp() {
     const data = this.validatedData();
     if (data) {
-      this.userService.create({...data, type: 'entrepreneur'}).subscribe(() => {
+      this.userService.create({...data, type: 'vendor'}).subscribe(() => {
         this.onRegistrationSuccess();
       });
     }

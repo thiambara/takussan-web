@@ -67,7 +67,7 @@ export class ProjectFormComponent implements OnInit {
     const data = {
       ...this.projectForm.value,
       status: 'active',
-      user_id: loggedUser.id
+      user_id: authUser.id
     };
     (
       this.project.id

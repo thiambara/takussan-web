@@ -46,7 +46,7 @@ export class AuthService extends BaseHttpService<User> {
     } else {
       StorageService.setItemInSessionStorage('authenticatedUser', user);
     }
-    window.loggedUser = this.authenticatedUser;
+    window.authUser = this.authenticatedUser;
   }
 
   public login(credentials: { username: string, password: string }): Observable<AuthToken> {
@@ -85,7 +85,7 @@ export class AuthService extends BaseHttpService<User> {
 
 @Injectable({
   providedIn: 'root',
-  useValue: loggedUser
+  useValue: authUser
 })
 export class LoggedUser implements User {
 }

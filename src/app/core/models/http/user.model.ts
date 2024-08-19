@@ -10,14 +10,16 @@ export interface User extends BaseModelInterface {
   email?: string;
   email_verified_at?: string;
   phone?: string;
-  status?: string;
+  status?: 'active' | 'inactive' | 'blocked' | 'delete';
   username?: string;
   password?: string;
+  added_by_id?: number;
   google_id?: string;
-  type?: string;
+  type?: 'admin' | 'customer' | 'vendor';
   addresses?: Address[];
   projects?: Project[];
   bookings?: Booking[];
+  added_by?: User;
 }
 
 

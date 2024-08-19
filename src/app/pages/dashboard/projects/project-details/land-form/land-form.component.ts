@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {ToolbarModule} from "primeng/toolbar";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -11,6 +11,8 @@ import {Ripple} from "primeng/ripple";
 import {finalize} from "rxjs";
 import {LandService} from "../../../../../core/sevices/http/land.service";
 import {Land} from "../../../../../core/models/http/land.model";
+import {User} from "../../../../../core/models/http/user.model";
+import {CustomerService} from "../../../../../core/sevices/http/customer.service";
 
 @Component({
   selector: 'app-land-form',
@@ -28,13 +30,15 @@ import {Land} from "../../../../../core/models/http/land.model";
   standalone: true
 })
 export class LandFormComponent implements OnInit {
-  @Input('land') land: Land = {};
-  @Input('projectId') projectId!: number;
+  land: Land = {};
+  projectId!: number;
+  customers?: User[];
   landForm!: FormGroup;
   saving = false;
 
   constructor(
     private landService: LandService,
+    private customerService: CustomerService,
     private messageService: MessageService,
     private fb: FormBuilder,
     private ref: DynamicDialogRef,
@@ -48,7 +52,7 @@ export class LandFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.land = deepCopy(this.config.data.land);
+    this.land = deepCopy(this.config.data.land || {});
     this.projectId = this.config.data.projectId;
     this.initializeFormBuilder();
   }
@@ -58,6 +62,24 @@ export class LandFormComponent implements OnInit {
       title: [this.land.title, [Validators.required]],
       description: [this.land.description, []]
     });
+  }
+
+
+  getCustomers(searchQuery: string = '') {
+    this.customerService.index({search_query: searchQuery})
+      .subscribe({
+        next: result => {
+          this.customers = result as User[];
+        },
+        error: error => {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: error.message || 'An error has occurred',
+            life: 3000
+          })
+        }
+      });
 
   }
 
@@ -70,7 +92,6 @@ export class LandFormComponent implements OnInit {
       status: 'active',
       price: 100,
       area: 100,
-      description: 'Description 1',
       project_id: this.projectId
     };
     (

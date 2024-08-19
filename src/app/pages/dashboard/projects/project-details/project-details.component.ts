@@ -90,7 +90,7 @@ export class ProjectDetailsComponent implements OnInit {
       closable: true,
       data: {
         land: land ?? {},
-        projectId: this.projectId
+        projectId: this.projectId,
       }
     }).onClose.subscribe({
       next: (value) => {

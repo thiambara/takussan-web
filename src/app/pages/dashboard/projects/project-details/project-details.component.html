@@ -27,39 +27,40 @@
   </div>
 </div>
 
+
 <div class="flex vertical-align-middle mb-3">
   <h5 class="text-3xl m-0 mr-2">Lands</h5>
   <div (click)="showLandForm()"
-       class="border-dashed border-round flex justify-content-center px-1 pb-1 text-3xl cursor-pointer align-items-center h-2rem">
+       class="border-dashed
+       border-round
+       flex
+       justify-content-center px-1 pb-1 text-3xl cursor-pointer align-items-center h-2rem hover:shadow-4 transition-duration-300">
     <span>+</span>
   </div>
 </div>
 
 @if (project?.lands?.length) {
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-    <div *ngFor="let land of project?.lands" class="card p-3">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="col">
-          <h6 class="text-gray-500">Title</h6>
-          <p class="text-900 text-xl">{{ land?.title }}</p>
-        </div>
-        <div class="col">
-          <h6 class="text-gray-500">Status</h6>
-          <p class="text-900 text-xl">{{ land?.status }}</p>
-        </div>
-        <div class="col">
-          <h6 class="text-gray-500">Created At</h6>
-          <p class="text-900 text-xl">{{ land?.created_at | date: 'medium' }}</p>
-        </div>
-        <div class="col">
-          <h6 class="text-gray-500">Description</h6>
-          <p class="text-900 text-sm">{{ land?.description ?? 'No description' }}</p>
+  <div class="grid">
+    @for (land of project?.lands; track land.id) {
+      <div class="col-12 lg:col-6 xl:col-3">
+        <div class="card mb-0 hover:shadow-4 transition-duration-400 cursor-pointer">
+          <div class="flex justify-content-between mb-3">
+            <div>
+              <span class="block text-500 font-medium mb-3">{{ land.title }}</span>
+              <div class="text-900 font-medium text-xl">{{ land.price | currency:'FCFA':'symbol':'4.0-0':'fr' }}</div>
+            </div>
+            <div (click)="showLandForm(land)"
+                 class="flex align-items-center justify-content-center bg-primary-100 border-round hover:shadow-4 transition-duration-400 cursor-pointer"
+                 [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
+              <i class="pi pi-pencil text-primary-500 text-xl"></i>
+            </div>
+          </div>
+          <span class="text-green-500 font-medium">%52+ </span>
+          <span class="text-500">{{ land.description }}</span>
         </div>
       </div>
-    </div>
+    }
   </div>
-
 } @else {
 
   <div class="h-10rem">

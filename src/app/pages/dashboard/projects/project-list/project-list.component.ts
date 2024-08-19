@@ -50,7 +50,11 @@ export class ProjectListComponent implements OnInit {
   getProjects() {
 
 
-    this.projectService.index({search_query: this.searchQuery, projects: {with_count: 'lands'}}).subscribe({
+    this.projectService.index({
+      search_query: this.searchQuery,
+      projects: {with_count: 'lands'},
+      filter_fields: {user_id: authUser.id}
+    }).subscribe({
       next: data => this.projects = (data as Project[]),
       error: error => this.messageService.add({
         severity: 'error',

@@ -2,6 +2,8 @@ export type ClassType<T> = new (...args: any[]) => T;
 export type TableName =
   'addresses'
   | 'projects'
+  | 'lands'
+  | 'bookings'
   | 'users';
 
 export interface BaseModelInterface {

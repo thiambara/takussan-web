@@ -10,7 +10,8 @@ declare global {
   interface Window {
     Echo: Echo;
     Pusher: typeof Pusher
-    loggedUser: User;
+    authUser: User;
+    firebaseApp: firebase.app.App
 
     objectToQueryString(initialObj: any): string;
 
@@ -19,7 +20,6 @@ declare global {
     toSnakeCase(initialObj: string): string;
 
     deepCopy<T>(obj: T): T;
-    firebaseApp: firebase.app.App
   }
 
   interface String {
@@ -28,7 +28,7 @@ declare global {
     toSnakeCase(): string;
   }
 
-  let loggedUser: User;
+  let authUser: User;
   let objectToQueryString: (initialObj: any) => string;
   let toCamelCase: (initialObj: string) => string;
   let toSnakeCase: (initialObj: string) => string;
