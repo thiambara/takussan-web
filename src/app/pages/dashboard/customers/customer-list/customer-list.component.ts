@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
-import {Project} from "../../../../core/models/http/project.model";
-import {ProjectService} from "../../../../core/sevices/http/project.service";
+import {User as Customer} from "../../../../core/models/http/user.model";
+import {CustomerService} from "../../../../core/sevices/http/customer.service";
 import {ToolbarModule} from "primeng/toolbar";
 import {FileUploadModule} from "primeng/fileupload";
 import {Ripple} from "primeng/ripple";
@@ -11,12 +11,12 @@ import {TableModule} from "primeng/table";
 import {FormsModule} from "@angular/forms";
 import {DatePipe} from "@angular/common";
 import {DialogService} from "primeng/dynamicdialog";
-import {ProjectFormComponent} from "../project-form/project-form.component";
+import {CustomerFormComponent} from "../customer-form/customer-form.component";
 import {RouterLink} from "@angular/router";
 
 @Component({
-  selector: 'app-project-list',
-  templateUrl: './project-list.component.html',
+  selector: 'app-customer-list',
+  templateUrl: './customer-list.component.html',
   imports: [
     ToolbarModule,
     FileUploadModule,
@@ -30,32 +30,30 @@ import {RouterLink} from "@angular/router";
   ],
   standalone: true
 })
-export class ProjectListComponent implements OnInit {
+export class CustomerListComponent implements OnInit {
 
-  projects: Project[] = [];
-  project: Project = {};
-  selectedProjects: Project[] = [];
+  customers: Customer[] = [];
+  customer: Customer = {};
+  selectedCustomers: Customer[] = [];
 
   searchQuery: string = '';
   searchQueryTimeout!: any;
   rowsPerPageOptions = [5, 10, 20];
 
-  constructor(private projectService: ProjectService, private messageService: MessageService, private dialogService: DialogService) {
+  constructor(private customerService: CustomerService, private messageService: MessageService, private dialogService: DialogService) {
   }
 
   ngOnInit() {
-    this.getProjects();
+    this.getCustomers();
   }
 
-  getProjects() {
-    console.log(authUser)
+  getCustomers() {
 
-    this.projectService.index({
+
+    this.customerService.index({
       search_query: this.searchQuery,
-      projects: {with_count: 'lands'},
-      filter_fields: {user_id: authUser.id}
     }).subscribe({
-      next: data => this.projects = (data as Project[]),
+      next: data => this.customers = (data as Customer[]),
       error: error => this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -66,7 +64,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   openNew() {
-    this.showProjectForm();
+    this.showCustomerForm();
   }
 
   onSearch() {
@@ -74,25 +72,30 @@ export class ProjectListComponent implements OnInit {
       clearTimeout(this.searchQueryTimeout);
     }
     this.searchQueryTimeout = setTimeout(() => {
-      this.getProjects();
+      this.getCustomers();
     }, 500);
   }
 
 
-  showProjectForm(project?: Project) {
-    this.dialogService.open(ProjectFormComponent, {
-      header: project?.id ? 'Update project' : 'Create new project',
-      width: '40rem',
+  showCustomerForm(customer?: Customer) {
+    if (customer && !this.canEditCustomer(customer)) return;
+    this.dialogService.open(CustomerFormComponent, {
+      header: customer?.id ? 'Update customer' : 'Create new customer',
+      width: '45rem',
       closable: true,
       data: {
-        project: project ?? {}
+        customer: customer ?? {}
       }
     }).onClose.subscribe({
       next: (value) => {
         if (value) {
-          this.getProjects();
+          this.getCustomers();
         }
       }
     });
+  }
+
+  canEditCustomer(customer: Customer) {
+    return customer.added_by_id === authUser.id;
   }
 }

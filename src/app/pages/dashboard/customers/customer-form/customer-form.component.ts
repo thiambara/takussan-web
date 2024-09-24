@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
-import {ProjectService} from "../../../../core/sevices/http/project.service";
+import {CustomerService} from "../../../../core/sevices/http/customer.service";
 import {ToolbarModule} from "primeng/toolbar";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Project} from "../../../../core/models/http/project.model";
+import {User as Customer} from "../../../../core/models/http/user.model";
 import {InputTextModule} from "primeng/inputtext";
 import {InputTextareaModule} from "primeng/inputtextarea";
 import {CommonModule} from "@angular/common";
@@ -13,8 +13,8 @@ import {Ripple} from "primeng/ripple";
 import {finalize} from "rxjs";
 
 @Component({
-  selector: 'app-project-form',
-  templateUrl: './project-form.component.html',
+  selector: 'app-customer-form',
+  templateUrl: './customer-form.component.html',
   imports: [
     CommonModule,
     ToolbarModule,
@@ -27,13 +27,13 @@ import {finalize} from "rxjs";
   ],
   standalone: true
 })
-export class ProjectFormComponent implements OnInit {
-  project: Project = {};
-  projectForm!: FormGroup;
+export class CustomerFormComponent implements OnInit {
+  customer: Customer = {};
+  customerForm!: FormGroup;
   saving = false;
 
   constructor(
-    private projectService: ProjectService,
+    private customerService: CustomerService,
     private messageService: MessageService,
     private fb: FormBuilder,
     private ref: DynamicDialogRef,
@@ -42,37 +42,38 @@ export class ProjectFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.project = this.config.data.project;
-    this.project = deepCopy(this.project);
+    this.customer = this.config.data.customer;
+    this.customer = deepCopy(this.customer);
     this.initializeFormBuilder();
   }
 
   initializeFormBuilder() {
-    this.projectForm = this.fb.group({
-      title: [this.project.title, [Validators.required]],
-      description: [this.project.description, []]
-
+    this.customerForm = this.fb.group({
+      first_name: [this.customer.first_name, [Validators.required]],
+      last_name: [this.customer.last_name, [Validators.required]],
+      phone: [this.customer.phone, []],
+      email: [this.customer.email, [Validators.email]]
     });
+
   }
 
   hasError(controlName: string, errorName?: string) {
-    if (errorName) return this.projectForm.controls[controlName].hasError(errorName);
-    const control = this.projectForm.get(controlName);
+    if (errorName) return this.customerForm.controls[controlName].hasError(errorName);
+    const control = this.customerForm.get(controlName);
     return control && control.invalid && (control.dirty || control.touched);
   }
 
-  saveProject() {
+  saveCustomer() {
     if (this.saving) return;
     this.saving = true;
     const data = {
-      ...this.projectForm.value,
+      ...this.customerForm.value,
       status: 'active',
-      user_id: authUser.id
     };
     (
-      this.project.id
-        ? this.projectService.update(this.project.id, data)
-        : this.projectService.create(data)
+      this.customer.id
+        ? this.customerService.update(this.customer.id, data)
+        : this.customerService.create(data)
     )
       .pipe(finalize(() => this.saving = false))
       .subscribe({
@@ -80,7 +81,7 @@ export class ProjectFormComponent implements OnInit {
           this.messageService.add({
             severity: 'success',
             summary: 'Success',
-            detail: 'Project saved successfully',
+            detail: 'Customer saved successfully',
             life: 3000
           })
 

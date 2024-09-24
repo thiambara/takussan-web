@@ -1,0 +1,60 @@
+<form [formGroup]="customerForm">
+  <div class="p-fluid">
+    <div class="field col-12">
+      <label for="first_name">First name</label>
+      <input [ngClass]="{'ng-invalid ng-dirty' : hasError('first_name')}"
+             autofocus
+             formControlName="first_name"
+             id="first_name"
+             name="first_name" pInputText required/>
+      @if (hasError('first_name')) {
+        @if (hasError('first_name', 'required')) {
+          <small class="ng-dirty ng-invalid mt-1 p-error">First name is required.</small>
+        }
+      }
+    </div>
+
+    <div class="field col-12">
+      <label for="last_name">Last name</label>
+      <input [ngClass]="{'ng-invalid ng-dirty' : hasError('last_name')}"
+             formControlName="last_name"
+             id="last_name"
+             name="last_name" pInputText required/>
+      @if (hasError('last_name')) {
+        @if (hasError('last_name', 'required')) {
+          <small class="ng-dirty ng-invalid mt-1 p-error">Last name is required.</small>
+        }
+      }
+    </div>
+
+    <div class="field col-12">
+      <label for="phone">Phone</label>
+      <input
+        formControlName="phone"
+        id="phone"
+        name="phone" pInputText/>
+    </div>
+
+    <div class="field col-12">
+      <label for="email">Email</label>
+      <input [ngClass]="{'ng-invalid ng-dirty' : hasError('email')}"
+             formControlName="email"
+             id="email"
+             name="email" pInputText/>
+      @if (hasError('email')) {
+        @if (hasError('email', 'email')) {
+          <small class="ng-dirty ng-invalid mt-1 p-error">Enter a valid email .</small>
+        }
+      }
+    </div>
+  </div>
+</form>
+
+<div class="flex justify-content-between">
+  <button (click)="close()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton pRipple></button>
+  <button (click)="saveCustomer()" [disabled]="customerForm.invalid" class="p-button-text"
+          icon="pi {{saving ? 'pi-spin pi-spinner': 'pi-check'}}"
+          label="Save"
+          pButton
+          pRipple></button>
+</div>

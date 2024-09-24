@@ -2,13 +2,16 @@
   <div class="p-fluid">
     <div class="field">
       <label for="title">Title</label>
-      <input [ngClass]="{'ng-invalid ng-dirty' : title.invalid && (title.dirty || title.touched)}" autofocus
+      <input [ngClass]="{'ng-invalid ng-dirty' : hasError('title')}" autofocus
              formControlName="title"
              id="title"
              name="title" pInputText required
              type="text"/>
-      <small *ngIf="title.invalid && (title.dirty || title.touched)" class="ng-dirty ng-invalid mt-1 p-error">Title is
-        required.</small>
+      @if (hasError('title')) {
+        @if (hasError('title', 'required')) {
+          <small class="ng-dirty ng-invalid mt-1 p-error">Title is required.</small>
+        }
+      }
     </div>
     <div class="field">
       <label for="description">Description</label>

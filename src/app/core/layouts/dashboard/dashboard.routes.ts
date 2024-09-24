@@ -13,13 +13,17 @@ export const routes: Routes = [
         pathMatch: 'full'
       },
       {
+        'path': 'home',
+        loadComponent: () => import('../../../pages/dashboard/home/home.component').then(m => m.HomeComponent)
+      },
+      {
         path: 'projects',
         loadChildren: () => import('../../../pages/dashboard/projects/projects.routes').then(m => m.routes),
       },
       {
-        'path': 'home',
-        loadComponent: () => import('../../../pages/dashboard/home/home.component').then(m => m.HomeComponent)
-      },
+        path: 'customers',
+        loadChildren: () => import('../../../pages/dashboard/customers/customers.routes').then(m => m.routes),
+      }
     ]
   },
 ];
