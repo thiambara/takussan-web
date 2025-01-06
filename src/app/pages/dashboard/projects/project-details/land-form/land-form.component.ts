@@ -46,11 +46,6 @@ export class LandFormComponent implements OnInit {
   ) {
   }
 
-  // FORM CONTROLS
-  get title() {
-    return this.landForm.get('title')!;
-  }
-
   ngOnInit() {
     this.land = deepCopy(this.config.data.land || {});
     this.projectId = this.config.data.projectId;
@@ -64,6 +59,11 @@ export class LandFormComponent implements OnInit {
     });
   }
 
+  hasError(controlName: string, errorName?: string) {
+    if (errorName) return this.landForm.controls[controlName].hasError(errorName);
+    const control = this.landForm.get(controlName);
+    return control && control.invalid && (control.dirty || control.touched);
+  }
 
   getCustomers(searchQuery: string = '') {
     this.customerService.index({search_query: searchQuery})

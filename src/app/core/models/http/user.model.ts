@@ -15,7 +15,7 @@ export interface User extends BaseModelInterface {
   password?: string;
   added_by_id?: number;
   google_id?: string;
-  type?: 'admin' | 'customer' | 'vendor';
+  roles?: ('admin' | 'customer' | 'vendor')[];
   addresses?: Address[];
   projects?: Project[];
   bookings?: Booking[];
