@@ -54,6 +54,10 @@ export class AuthService extends BaseHttpService<User> {
     return this.http.post<AuthToken>(`${this.endpointUrl}/login`, c, this.httpOptions).pipe();
   }
 
+  public signUp(data: {}): Observable<AuthToken> {
+    return this.http.post<AuthToken>(`${this.endpointUrl}/sign-up`, {...data}, this.httpOptions).pipe();
+  }
+
   public fetchAuthenticatedUser(): Observable<User> {
     return this.http.get<User>(`${this.endpointUrl}/auth-user`, this.httpOptions).pipe();
   }

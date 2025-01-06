@@ -5,12 +5,12 @@ import {ToolbarModule} from "primeng/toolbar";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Project} from "../../../../core/models/http/project.model";
 import {InputTextModule} from "primeng/inputtext";
-import {InputTextareaModule} from "primeng/inputtextarea";
 import {CommonModule} from "@angular/common";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ButtonDirective} from "primeng/button";
 import {Ripple} from "primeng/ripple";
 import {finalize} from "rxjs";
+import {Textarea} from "primeng/textarea";
 
 @Component({
   selector: 'app-project-form',
@@ -20,10 +20,10 @@ import {finalize} from "rxjs";
     ToolbarModule,
     FormsModule,
     InputTextModule,
-    InputTextareaModule,
     ReactiveFormsModule,
     ButtonDirective,
     Ripple,
+    Textarea,
   ],
   standalone: true
 })

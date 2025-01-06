@@ -3,7 +3,6 @@ import {MessageService} from 'primeng/api';
 import {ToolbarModule} from "primeng/toolbar";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {InputTextModule} from "primeng/inputtext";
-import {InputTextareaModule} from "primeng/inputtextarea";
 import {CommonModule} from "@angular/common";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {ButtonDirective} from "primeng/button";
@@ -13,6 +12,7 @@ import {LandService} from "../../../../../core/sevices/http/land.service";
 import {Land} from "../../../../../core/models/http/land.model";
 import {User} from "../../../../../core/models/http/user.model";
 import {CustomerService} from "../../../../../core/sevices/http/customer.service";
+import {Textarea} from "primeng/textarea";
 
 @Component({
   selector: 'app-land-form',
@@ -22,10 +22,10 @@ import {CustomerService} from "../../../../../core/sevices/http/customer.service
     ToolbarModule,
     FormsModule,
     InputTextModule,
-    InputTextareaModule,
     ReactiveFormsModule,
     ButtonDirective,
     Ripple,
+    Textarea,
   ],
   standalone: true
 })

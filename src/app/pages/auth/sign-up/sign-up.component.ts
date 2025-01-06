@@ -9,7 +9,7 @@ import {PasswordModule} from "primeng/password";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {Ripple} from "primeng/ripple";
 import {User} from "../../../core/models/http/user.model";
-import {UserService} from "../../../core/sevices/http/user.service";
+import {AuthService} from "../../../core/sevices/http/auth/auth.service";
 
 @Component({
 
@@ -42,7 +42,7 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     public layoutService: DashboardLayoutService,
-    private userService: UserService,
+    private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute
   ) {
@@ -66,7 +66,7 @@ export class SignUpComponent implements OnInit {
   signUp() {
     const data = this.validatedData();
     if (data) {
-      this.userService.create({...data, type: 'vendor'}).subscribe(() => {
+      this.authService.signUp({...data, roles: ['vendor'], type: 'vendor'}).subscribe(() => {
         this.onRegistrationSuccess();
       });
     }
