@@ -3,14 +3,14 @@
   <p-toolbar styleClass="mb-4">
     <ng-template pTemplate="left">
       <div class="my-2">
-        <button (click)="openNew()" class="p-button-success mr-2" icon="pi pi-plus" label="New" pButton
-                pRipple></button>
+        <p-button (click)="openNew()" class="p-button-success mr-2" icon="pi pi-plus" label="New"
+        ></p-button>
       </div>
     </ng-template>
 
     <ng-template pTemplate="right">
-      <button (click)="projectsTable.exportCSV()" class="p-button-help" icon="pi pi-upload" label="Export" pButton
-              pRipple></button>
+      <p-button (click)="projectsTable.exportCSV()" class="p-button-help" icon="pi pi-upload" label="Export"
+      ></p-button>
 
     </ng-template>
   </p-toolbar>
@@ -77,8 +77,8 @@
         </td>
         <td>
           <div class="flex justify-content-end">
-            <button [routerLink]="project.id" class="p-button-text" label="Details" pButton
-                    pRipple></button>
+            <p-button [routerLink]="project.id" class="p-button-text" label="Details"
+            ></p-button>
           </div>
 
         </td>

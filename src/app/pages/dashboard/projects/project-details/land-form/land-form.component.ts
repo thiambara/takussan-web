@@ -5,8 +5,7 @@ import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} fr
 import {InputTextModule} from "primeng/inputtext";
 import {CommonModule} from "@angular/common";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {ButtonDirective} from "primeng/button";
-import {Ripple} from "primeng/ripple";
+import {Button} from "primeng/button";
 import {finalize} from "rxjs";
 import {LandService} from "../../../../../core/sevices/http/land.service";
 import {Land} from "../../../../../core/models/http/land.model";
@@ -23,9 +22,8 @@ import {Textarea} from "primeng/textarea";
     FormsModule,
     InputTextModule,
     ReactiveFormsModule,
-    ButtonDirective,
-    Ripple,
     Textarea,
+    Button,
   ],
   standalone: true
 })

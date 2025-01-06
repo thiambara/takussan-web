@@ -22,10 +22,10 @@
 </form>
 
 <div class="flex justify-content-between">
-  <button (click)="close()" class="p-button-text" icon="pi pi-times" label="Cancel" pButton pRipple></button>
-  <button (click)="saveProject()" [disabled]="projectForm.invalid" class="p-button-text"
+  <p-button (click)="close()" class="p-button-text" icon="pi pi-times" label="Cancel"
+          ></p-button>
+  <p-button (click)="saveProject()" [disabled]="projectForm.invalid" class="p-button-text"
           icon="pi {{saving ? 'pi-spin pi-spinner': 'pi-check'}}"
           label="Save"
-          pButton
-          pRipple></button>
+          ></p-button>
 </div>

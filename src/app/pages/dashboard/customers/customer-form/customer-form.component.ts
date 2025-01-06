@@ -5,11 +5,9 @@ import {ToolbarModule} from "primeng/toolbar";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {User as Customer} from "../../../../core/models/http/user.model";
 import {InputTextModule} from "primeng/inputtext";
-import {InputTextareaModule} from "primeng/inputtextarea";
 import {CommonModule} from "@angular/common";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
-import {ButtonDirective} from "primeng/button";
-import {Ripple} from "primeng/ripple";
+import {Button} from "primeng/button";
 import {finalize} from "rxjs";
 
 @Component({
@@ -20,10 +18,8 @@ import {finalize} from "rxjs";
     ToolbarModule,
     FormsModule,
     InputTextModule,
-    InputTextareaModule,
     ReactiveFormsModule,
-    ButtonDirective,
-    Ripple,
+    Button,
   ],
   standalone: true
 })

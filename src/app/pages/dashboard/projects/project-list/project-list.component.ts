@@ -4,7 +4,6 @@ import {Project} from "../../../../core/models/http/project.model";
 import {ProjectService} from "../../../../core/sevices/http/project.service";
 import {ToolbarModule} from "primeng/toolbar";
 import {FileUploadModule} from "primeng/fileupload";
-import {Ripple} from "primeng/ripple";
 import {TreeTableModule} from "primeng/treetable";
 import {InputTextModule} from "primeng/inputtext";
 import {TableModule} from "primeng/table";
@@ -13,6 +12,7 @@ import {DatePipe} from "@angular/common";
 import {DialogService} from "primeng/dynamicdialog";
 import {ProjectFormComponent} from "../project-form/project-form.component";
 import {RouterLink} from "@angular/router";
+import {Button} from "primeng/button";
 
 @Component({
   selector: 'app-project-list',
@@ -20,13 +20,13 @@ import {RouterLink} from "@angular/router";
   imports: [
     ToolbarModule,
     FileUploadModule,
-    Ripple,
     TreeTableModule,
     InputTextModule,
     TableModule,
     FormsModule,
     DatePipe,
-    RouterLink
+    RouterLink,
+    Button
   ],
   standalone: true
 })

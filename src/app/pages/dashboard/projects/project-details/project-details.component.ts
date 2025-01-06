@@ -4,8 +4,7 @@ import {ProjectService} from "../../../../core/sevices/http/project.service";
 import {Project} from "../../../../core/models/http/project.model";
 import {CommonModule} from "@angular/common";
 import {finalize} from "rxjs";
-import {ButtonDirective} from "primeng/button";
-import {Ripple} from "primeng/ripple";
+import {Button} from "primeng/button";
 import {ProjectFormComponent} from "../project-form/project-form.component";
 import {DialogService} from "primeng/dynamicdialog";
 import {LandFormComponent} from "./land-form/land-form.component";
@@ -16,8 +15,7 @@ import {Land} from "../../../../core/models/http/land.model";
   templateUrl: './project-details.component.html',
   imports: [
     CommonModule,
-    ButtonDirective,
-    Ripple,
+    Button,
   ],
   standalone: true
 })

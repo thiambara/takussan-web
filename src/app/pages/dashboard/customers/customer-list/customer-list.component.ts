@@ -25,8 +25,6 @@ import {RouterLink} from "@angular/router";
     InputTextModule,
     TableModule,
     FormsModule,
-    DatePipe,
-    RouterLink
   ],
   standalone: true
 })
