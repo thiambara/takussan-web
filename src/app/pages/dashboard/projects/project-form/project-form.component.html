@@ -1,31 +1,25 @@
 <form [formGroup]="projectForm">
-  <div class="p-fluid">
-    <div class="field">
-      <label for="title">Title</label>
-      <input [ngClass]="{'ng-invalid ng-dirty' : hasError('title')}" autofocus
-             formControlName="title"
-             id="title"
-             name="title" pInputText required
-             type="text"/>
+  <div class="flex flex-col gap-6">
+    <div>
+      <label class="block font-bold mb-3" for="title">Title</label>
+      <input autofocus fluid formControlName="title" id="title" name="title" pInputText required type="text"/>
       @if (hasError('title')) {
         @if (hasError('title', 'required')) {
-          <small class="ng-dirty ng-invalid mt-1 p-error">Title is required.</small>
+          <small class="text-red-500">Title is required.</small>
         }
       }
     </div>
-    <div class="field">
-      <label for="description">Description</label>
-      <textarea cols="20" formControlName="description" id="description" name="description" pTextarea
-                rows="3"></textarea>
+
+    <div>
+      <label class="block font-bold mb-3" for="description">Description</label>
+      <textarea cols="20" fluid formControlName="description" id="description" pTextarea required rows="7"></textarea>
     </div>
   </div>
 </form>
 
-<div class="flex justify-content-between">
-  <p-button (click)="close()" class="p-button-text" icon="pi pi-times" label="Cancel"
-          ></p-button>
-  <p-button (click)="saveProject()" [disabled]="projectForm.invalid" class="p-button-text"
-          icon="pi {{saving ? 'pi-spin pi-spinner': 'pi-check'}}"
-          label="Save"
-          ></p-button>
+<div class="flex justify-between mt-2">
+  <p-button (click)="close()" icon="pi pi-times" label="Cancel"/>
+  <p-button (click)="saveProject()" [disabled]="projectForm.invalid"
+            icon="pi {{saving ? 'pi-spin pi-spinner': 'pi-check'}}"
+            label="Save"/>
 </div>

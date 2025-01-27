@@ -1,13 +1,10 @@
 import {Component, HostListener, OnInit} from '@angular/core';
-import {DashboardLayoutService} from "../../../core/layouts/dashboard/service/dashboard.layout.service";
-import {CommonModule, NgOptimizedImage} from "@angular/common";
-import {ButtonModule} from "primeng/button";
-import {CheckboxModule} from "primeng/checkbox";
-import {InputTextModule} from "primeng/inputtext";
+import {CommonModule} from "@angular/common";
+import {Button} from "primeng/button";
+import {InputText} from "primeng/inputtext";
 import {FormsModule} from "@angular/forms";
-import {PasswordModule} from "primeng/password";
+import {Password} from "primeng/password";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
-import {Ripple} from "primeng/ripple";
 import {User} from "../../../core/models/http/user.model";
 import {AuthService} from "../../../core/sevices/http/auth/auth.service";
 
@@ -17,14 +14,11 @@ import {AuthService} from "../../../core/sevices/http/auth/auth.service";
   templateUrl: './sign-up.component.html',
   imports: [
     CommonModule,
-    ButtonModule,
-    CheckboxModule,
-    InputTextModule,
     FormsModule,
-    PasswordModule,
     RouterLink,
-    Ripple,
-    NgOptimizedImage
+    Password,
+    Button,
+    InputText
   ],
   standalone: true
 })
@@ -41,7 +35,6 @@ export class SignUpComponent implements OnInit {
   };
 
   constructor(
-    public layoutService: DashboardLayoutService,
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute

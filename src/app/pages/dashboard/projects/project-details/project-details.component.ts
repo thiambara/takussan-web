@@ -5,10 +5,9 @@ import {Project} from "../../../../core/models/http/project.model";
 import {CommonModule} from "@angular/common";
 import {finalize} from "rxjs";
 import {Button} from "primeng/button";
-import {ProjectFormComponent} from "../project-form/project-form.component";
-import {DialogService} from "primeng/dynamicdialog";
-import {LandFormComponent} from "./land-form/land-form.component";
-import {Land} from "../../../../core/models/http/land.model";
+import {LandItemComponent} from "./land-item/land-item.component";
+import {ProjectComponentService} from "../component-services/project.component.service";
+import {LandComponentService} from "../component-services/land.component.service";
 
 @Component({
   selector: 'app-project-details',
@@ -16,6 +15,7 @@ import {Land} from "../../../../core/models/http/land.model";
   imports: [
     CommonModule,
     Button,
+    LandItemComponent,
   ],
   standalone: true
 })
@@ -25,9 +25,10 @@ export class ProjectDetailsComponent implements OnInit {
   loading = false;
 
   constructor(
+    private projectComponentService: ProjectComponentService,
+    private landComponentService: LandComponentService,
     private projectService: ProjectService,
     private messageService: MessageService,
-    private dialogService: DialogService
   ) {
   }
 
@@ -64,14 +65,7 @@ export class ProjectDetailsComponent implements OnInit {
 
   editProject() {
     if (!this.project) return;
-    this.dialogService.open(ProjectFormComponent, {
-      header: 'Update project',
-      width: '40rem',
-      closable: true,
-      data: {
-        project: this.project
-      }
-    }).onClose.subscribe({
+    this.projectComponentService.showProjectForm(this.project).onClose.subscribe({
       next: (value) => {
         if (value) {
           this.getProject();
@@ -80,17 +74,9 @@ export class ProjectDetailsComponent implements OnInit {
     });
   }
 
-  showLandForm(land?: Land) {
+  addNewLandToProject() {
     if (!this.project) return;
-    this.dialogService.open(LandFormComponent, {
-      header: land?.id ? 'Update land' : 'Add new land',
-      width: '40rem',
-      closable: true,
-      data: {
-        land: land ?? {},
-        projectId: this.projectId,
-      }
-    }).onClose.subscribe({
+    this.landComponentService.showLandForm(undefined, this.projectId).onClose.subscribe({
       next: (value) => {
         if (value) {
           this.getProject();

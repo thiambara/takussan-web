@@ -1,10 +1,9 @@
+/* Tailwind */
+@use "tailwind.css";
+
 /* Layout css */
-//@use "assets/layout/styles/theme/lara-light-indigo/theme.css";
-@use "assets/layout/styles/layout/layout.scss";
-@use "assets/layout/styles/theme/lara-light-indigo/theme.css";
+@use "assets/layout/layout.scss";
+
 /* PrimeNG */
 @use "primeicons/primeicons.css";
-//@use "primeng/resources/primeng.css";
 
-/* PrimeFlex */
-@use "primeflex/primeflex.css";

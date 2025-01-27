@@ -1,5 +1,10 @@
 import {ApplicationConfig, LOCALE_ID, provideZoneChangeDetection} from '@angular/core';
-import {provideRouter, withComponentInputBinding} from '@angular/router';
+import {
+  provideRouter,
+  withComponentInputBinding,
+  withEnabledBlockingInitialNavigation,
+  withInMemoryScrolling
+} from '@angular/router';
 import Aura from '@primeng/themes/aura';
 
 import {routes} from './app.routes';
@@ -12,17 +17,26 @@ import {providePrimeNG} from "primeng/config";
 
 export const appConfig: ApplicationConfig = {
   providers: [
+    provideRouter(routes,
+      withInMemoryScrolling({anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled'}),
+      withEnabledBlockingInitialNavigation(),
+      withComponentInputBinding()
+    ),
     provideAnimationsAsync(),
     provideZoneChangeDetection({eventCoalescing: true}),
-    provideRouter(routes, withComponentInputBinding()),
     provideHttpClient(withInterceptors([takussanApiAuthInterceptor])),
     providePrimeNG({
       theme: {
-        preset: Aura
+        preset: Aura,
+        options: {darkModeSelector: '.app-dark'}
       }
     }),
-    MessageService,
-    DialogService,
+
+    // PrimeNG services
+    [
+      MessageService,
+      DialogService
+    ],
     {provide: LOCALE_ID, useValue: "fr-FR"},
   ]
 };

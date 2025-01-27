@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {CustomerService} from "../../../../core/sevices/http/customer.service";
-import {ToolbarModule} from "primeng/toolbar";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {User as Customer} from "../../../../core/models/http/user.model";
-import {InputTextModule} from "primeng/inputtext";
+import {InputText} from "primeng/inputtext";
 import {CommonModule} from "@angular/common";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Button} from "primeng/button";
@@ -15,11 +14,10 @@ import {finalize} from "rxjs";
   templateUrl: './customer-form.component.html',
   imports: [
     CommonModule,
-    ToolbarModule,
     FormsModule,
-    InputTextModule,
-    ReactiveFormsModule,
     Button,
+    ReactiveFormsModule,
+    InputText,
   ],
   standalone: true
 })

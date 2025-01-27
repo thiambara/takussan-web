@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {ProjectService} from "../../../../core/sevices/http/project.service";
-import {ToolbarModule} from "primeng/toolbar";
-import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {Project} from "../../../../core/models/http/project.model";
-import {InputTextModule} from "primeng/inputtext";
+import {InputText} from "primeng/inputtext";
 import {CommonModule} from "@angular/common";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Button} from "primeng/button";
@@ -16,12 +15,10 @@ import {Textarea} from "primeng/textarea";
   templateUrl: './project-form.component.html',
   imports: [
     CommonModule,
-    ToolbarModule,
-    FormsModule,
-    InputTextModule,
     ReactiveFormsModule,
     Textarea,
     Button,
+    InputText,
   ],
   standalone: true
 })

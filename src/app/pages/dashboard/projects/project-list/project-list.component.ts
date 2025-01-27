@@ -1,36 +1,37 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {Project} from "../../../../core/models/http/project.model";
 import {ProjectService} from "../../../../core/sevices/http/project.service";
-import {ToolbarModule} from "primeng/toolbar";
-import {FileUploadModule} from "primeng/fileupload";
-import {TreeTableModule} from "primeng/treetable";
-import {InputTextModule} from "primeng/inputtext";
-import {TableModule} from "primeng/table";
-import {FormsModule} from "@angular/forms";
+import {Toolbar} from "primeng/toolbar";
+import {Table, TableModule} from "primeng/table";
 import {DatePipe} from "@angular/common";
 import {DialogService} from "primeng/dynamicdialog";
-import {ProjectFormComponent} from "../project-form/project-form.component";
 import {RouterLink} from "@angular/router";
 import {Button} from "primeng/button";
+import {IconField} from "primeng/iconfield";
+import {InputIcon} from "primeng/inputicon";
+import {FormsModule} from "@angular/forms";
+import {InputText} from "primeng/inputtext";
+import {ProjectComponentService} from "../component-services/project.component.service";
 
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
   imports: [
-    ToolbarModule,
-    FileUploadModule,
-    TreeTableModule,
-    InputTextModule,
     TableModule,
-    FormsModule,
     DatePipe,
     RouterLink,
-    Button
+    Button,
+    IconField,
+    InputIcon,
+    Toolbar,
+    FormsModule,
+    InputText
   ],
   standalone: true
 })
 export class ProjectListComponent implements OnInit {
+  @ViewChild('projectsTable') projectsTable!: Table;
 
   projects: Project[] = [];
   project: Project = {};
@@ -40,7 +41,12 @@ export class ProjectListComponent implements OnInit {
   searchQueryTimeout!: any;
   rowsPerPageOptions = [5, 10, 20];
 
-  constructor(private projectService: ProjectService, private messageService: MessageService, private dialogService: DialogService) {
+  constructor(
+    private projectComponentService: ProjectComponentService,
+    private projectService: ProjectService,
+    private messageService: MessageService,
+    private dialogService: DialogService,
+  ) {
   }
 
   ngOnInit() {
@@ -80,19 +86,16 @@ export class ProjectListComponent implements OnInit {
 
 
   showProjectForm(project?: Project) {
-    this.dialogService.open(ProjectFormComponent, {
-      header: project?.id ? 'Update project' : 'Create new project',
-      width: '40rem',
-      closable: true,
-      data: {
-        project: project ?? {}
-      }
-    }).onClose.subscribe({
+    this.projectComponentService.showProjectForm(project).onClose.subscribe({
       next: (value) => {
         if (value) {
           this.getProjects();
         }
       }
     });
+  }
+
+  exportCSV() {
+    this.projectsTable.exportCSV();
   }
 }

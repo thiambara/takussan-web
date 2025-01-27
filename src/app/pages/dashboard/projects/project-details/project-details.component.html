@@ -1,71 +1,53 @@
-<div class="flex justify-content-between mb-4 align-items-center pl-1">
+<div class="flex justify-between mb-6 items-center pl-1">
   <h5 class="m-0 text-2xl">Project Details</h5>
-  <p-button (click)="editProject()" class="p-button-text" icon="pi pi-pencil" label="Edit"
+  <p-button (click)="editProject()" icon="pi pi-pencil" label="Edit" text
   ></p-button>
 </div>
-<div class="card p-3">
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+<div class="card p-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
     <div class="col">
       <h6 class="text-gray-500">Title</h6>
-      <p class="text-900 text-xl">{{ project?.title }}</p>
+      <p class="text-surface-900 dark:text-surface-0 text-xl">{{ project?.title }}</p>
     </div>
     <div class="col">
       <h6 class="text-gray-500">Status</h6>
-      <p class="text-900 text-xl">{{ project?.status }}</p>
+      <p class="text-surface-900 dark:text-surface-0 text-xl">{{ project?.status }}</p>
     </div>
     <div class="col">
       <h6 class="text-gray-500">Created At</h6>
-      <p class="text-900 text-xl">{{ project?.created_at | date: 'medium' }}</p>
+      <p class="text-surface-900 dark:text-surface-0 text-xl">{{ project?.created_at | date: 'medium' }}</p>
     </div>
     <div class="col">
       <h6 class="text-gray-500">Number of lands</h6>
-      <p class="text-900 text-xl">{{ project?.lands_count }}</p>
+      <p class="text-surface-900 dark:text-surface-0 text-xl">{{ project?.lands_count }}</p>
     </div>
     <div class="col">
       <h6 class="text-gray-500">Description</h6>
-      <p class="text-900 text-sm">{{ project?.description ?? 'No description' }}</p>
+      <p class="text-surface-900 dark:text-surface-0 text-sm">{{ project?.description ?? 'No description' }}</p>
     </div>
   </div>
 </div>
 
 
-<div class="flex vertical-align-middle mb-3">
+<div class="flex align-middle mb-4">
   <h5 class="text-3xl m-0 mr-2">Lands</h5>
-  <div (click)="showLandForm()"
-       class="border-dashed
-       border-round
-       flex
-       justify-content-center px-1 pb-1 text-3xl cursor-pointer align-items-center h-2rem hover:shadow-4 transition-duration-300">
-    <span>+</span>
-  </div>
+  <p-button (click)="addNewLandToProject()" icon="pi pi-plus" label="Add Label" text
+  ></p-button>
+
 </div>
 
 @if (project?.lands?.length) {
-  <div class="grid">
+  <div class="grid grid-cols-12 gap-4">
     @for (land of project?.lands; track land.id) {
-      <div class="col-12 lg:col-6 xl:col-3">
-        <div class="card mb-0 hover:shadow-4 transition-duration-400 cursor-pointer">
-          <div class="flex justify-content-between mb-3">
-            <div>
-              <span class="block text-500 font-medium mb-3">{{ land.title }}</span>
-              <div class="text-900 font-medium text-xl">{{ land.price | currency:'FCFA':'symbol':'4.0-0':'fr' }}</div>
-            </div>
-            <div (click)="showLandForm(land)"
-                 class="flex align-items-center justify-content-center bg-primary-100 border-round hover:shadow-4 transition-duration-400 cursor-pointer"
-                 [ngStyle]="{width: '2.5rem', height: '2.5rem'}">
-              <i class="pi pi-pencil text-primary-500 text-xl"></i>
-            </div>
-          </div>
-          <span class="text-green-500 font-medium">%52+ </span>
-          <span class="text-500">{{ land.description }}</span>
-        </div>
+      <div class="col-span-12 lg:col-span-6 xl:col-span-3">
+        <app-land-item [land]="land" (onEdit)="getProject()"></app-land-item>
       </div>
     }
   </div>
 } @else {
 
-  <div class="h-10rem">
-    <div class="flex justify-content-center align-items-center h-full">
+  <div class="h-40">
+    <div class="flex justify-center items-center h-full">
       <h1>No lands found</h1>
     </div>
   </div>

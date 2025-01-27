@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
-import {ToolbarModule} from "primeng/toolbar";
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {InputTextModule} from "primeng/inputtext";
+import {InputText} from "primeng/inputtext";
 import {CommonModule} from "@angular/common";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {Button} from "primeng/button";
@@ -18,12 +17,11 @@ import {Textarea} from "primeng/textarea";
   templateUrl: './land-form.component.html',
   imports: [
     CommonModule,
-    ToolbarModule,
     FormsModule,
-    InputTextModule,
-    ReactiveFormsModule,
     Textarea,
     Button,
+    ReactiveFormsModule,
+    InputText,
   ],
   standalone: true
 })
@@ -81,7 +79,7 @@ export class LandFormComponent implements OnInit {
 
   }
 
-  save() {
+  saveLand() {
     console.log(this.projectId)
     if (this.saving) return;
     this.saving = true;

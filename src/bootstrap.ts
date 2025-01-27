@@ -98,7 +98,7 @@ function customizeLocalAndSessionStorage(): string {
     const logout = () => {
       localStorage.clear();
       sessionStorage.clear();
-      inject(Router).navigate(['/login']);
+      inject(Router).navigate(['/login']).then();
     }
 
     // OVERRIDE LOCAL STORAGE METHODS

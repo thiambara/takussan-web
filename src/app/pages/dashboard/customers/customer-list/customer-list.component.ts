@@ -1,34 +1,35 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {User as Customer} from "../../../../core/models/http/user.model";
 import {CustomerService} from "../../../../core/sevices/http/customer.service";
-import {ToolbarModule} from "primeng/toolbar";
-import {FileUploadModule} from "primeng/fileupload";
+import {Toolbar} from "primeng/toolbar";
 import {Ripple} from "primeng/ripple";
-import {TreeTableModule} from "primeng/treetable";
-import {InputTextModule} from "primeng/inputtext";
-import {TableModule} from "primeng/table";
+import {InputText} from "primeng/inputtext";
+import {Table, TableModule} from "primeng/table";
 import {FormsModule} from "@angular/forms";
-import {DatePipe} from "@angular/common";
 import {DialogService} from "primeng/dynamicdialog";
 import {CustomerFormComponent} from "../customer-form/customer-form.component";
-import {RouterLink} from "@angular/router";
+import {Button} from "primeng/button";
+import {IconField} from "primeng/iconfield";
+import {InputIcon} from "primeng/inputicon";
 
 @Component({
   selector: 'app-customer-list',
   templateUrl: './customer-list.component.html',
   imports: [
-    ToolbarModule,
-    FileUploadModule,
     Ripple,
-    TreeTableModule,
-    InputTextModule,
+    Button,
+    IconField,
+    InputIcon,
+    Toolbar,
     TableModule,
     FormsModule,
+    InputText,
   ],
   standalone: true
 })
 export class CustomerListComponent implements OnInit {
+  @ViewChild('customersTable') customersTable!: Table;
 
   customers: Customer[] = [];
   customer: Customer = {};
@@ -95,5 +96,9 @@ export class CustomerListComponent implements OnInit {
 
   canEditCustomer(customer: Customer) {
     return customer.added_by_id === authUser.id;
+  }
+
+  exportCSV() {
+    this.customersTable.exportCSV();
   }
 }
