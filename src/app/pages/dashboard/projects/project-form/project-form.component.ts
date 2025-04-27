@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {ProjectService} from "../../../../core/sevices/http/project.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {Project} from "../../../../core/models/http/project.model";
+import {Property} from "../../../../core/models/http/project.model";
 import {InputText} from "primeng/inputtext";
 import {CommonModule} from "@angular/common";
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
@@ -23,7 +23,7 @@ import {Textarea} from "primeng/textarea";
   standalone: true
 })
 export class ProjectFormComponent implements OnInit {
-  project: Project = {};
+  project: Property = {};
   projectForm!: FormGroup;
   saving = false;
 

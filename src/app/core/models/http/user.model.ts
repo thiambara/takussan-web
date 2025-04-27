@@ -1,4 +1,4 @@
-import {Project} from "./project.model";
+import {Property} from "./project.model";
 import {BaseModelInterface} from "./base/base.model";
 import {Address} from "./address.model";
 import {Booking} from "./booking.model";
@@ -17,7 +17,7 @@ export interface User extends BaseModelInterface {
   google_id?: string;
   roles?: ('admin' | 'customer' | 'vendor')[];
   addresses?: Address[];
-  projects?: Project[];
+  projects?: Property[];
   bookings?: Booking[];
   added_by?: User;
 }

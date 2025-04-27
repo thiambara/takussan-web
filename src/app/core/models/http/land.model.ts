@@ -1,5 +1,5 @@
 import {BaseModelInterface} from "./base/base.model";
-import {Project} from "./project.model";
+import {Property} from "./project.model";
 import {Booking} from "./booking.model";
 
 export interface Land extends BaseModelInterface {
@@ -9,7 +9,7 @@ export interface Land extends BaseModelInterface {
   price?: number;
   area?: number;
   project_id?: number;
-  project?: Project;
+  project?: Property;
   bookings?: Booking[];
 }
 

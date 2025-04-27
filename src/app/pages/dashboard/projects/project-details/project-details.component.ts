@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {MessageService} from 'primeng/api';
 import {ProjectService} from "../../../../core/sevices/http/project.service";
-import {Project} from "../../../../core/models/http/project.model";
+import {Property} from "../../../../core/models/http/project.model";
 import {CommonModule} from "@angular/common";
 import {finalize} from "rxjs";
 import {Button} from "primeng/button";
@@ -20,7 +20,7 @@ import {LandComponentService} from "../component-services/land.component.service
   standalone: true
 })
 export class ProjectDetailsComponent implements OnInit {
-  project?: Project;
+  project?: Property;
   projectId!: number;
   loading = false;
 

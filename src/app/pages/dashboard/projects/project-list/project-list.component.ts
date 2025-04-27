@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {MessageService} from 'primeng/api';
-import {Project} from "../../../../core/models/http/project.model";
+import {Property} from "../../../../core/models/http/project.model";
 import {ProjectService} from "../../../../core/sevices/http/project.service";
 import {Toolbar} from "primeng/toolbar";
 import {Table, TableModule} from "primeng/table";
@@ -33,9 +33,9 @@ import {ProjectComponentService} from "../component-services/project.component.s
 export class ProjectListComponent implements OnInit {
   @ViewChild('projectsTable') projectsTable!: Table;
 
-  projects: Project[] = [];
-  project: Project = {};
-  selectedProjects: Project[] = [];
+  projects: Property[] = [];
+  project: Property = {};
+  selectedProjects: Property[] = [];
 
   searchQuery: string = '';
   searchQueryTimeout!: any;
@@ -61,7 +61,7 @@ export class ProjectListComponent implements OnInit {
       projects: {with_count: 'lands'},
       filter_fields: {user_id: authUser.id}
     }).subscribe({
-      next: data => this.projects = (data as Project[]),
+      next: data => this.projects = (data as Property[]),
       error: error => this.messageService.add({
         severity: 'error',
         summary: 'Error',
@@ -85,7 +85,7 @@ export class ProjectListComponent implements OnInit {
   }
 
 
-  showProjectForm(project?: Project) {
+  showProjectForm(project?: Property) {
     this.projectComponentService.showProjectForm(project).onClose.subscribe({
       next: (value) => {
         if (value) {
